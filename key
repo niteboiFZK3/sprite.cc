@@ -1,0 +1,164 @@
+-- Создаем GUI элементы
+local screenGui = Instance.new("ScreenGui")
+screenGui.Parent = game.Players.LocalPlayer.PlayerGui
+
+-- Создаем фрейм для центрального расположения элементов
+local frame = Instance.new("Frame")
+frame.Size = UDim2.new(0, 400, 0, 350)  -- Размер фрейма
+frame.Position = UDim2.new(0.5, -200, 0.5, -175)  -- Позиция фрейма
+frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)  -- Черный фон для фрейма
+frame.BackgroundTransparency = 0.2  -- Полупрозрачный фон (50%)
+frame.Parent = screenGui
+
+-- Создаем ImageLabel для отображения изображения сверху
+local imageLabel = Instance.new("ImageLabel")
+imageLabel.Size = UDim2.new(0, 400, 0, 400)  -- Размер изображения
+imageLabel.Position = UDim2.new(0.5, -200, -1, 0)  -- Позиция сверху
+imageLabel.Image = "rbxassetid://87361580813465"  -- Указываем ID изображения
+imageLabel.BackgroundTransparency = 1  -- Убираем фон у изображения
+imageLabel.Parent = frame
+
+-- Создаем текстовое поле для ввода ключа (верх)
+local keyTextBox = Instance.new("TextBox")
+keyTextBox.Size = UDim2.new(0, 300, 0, 50)
+keyTextBox.Position = UDim2.new(0.5, -150, 0.3, 0) -- Позиция вверху
+keyTextBox.Text = "Enter Key"
+keyTextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+keyTextBox.BackgroundColor3 = Color3.fromRGB(0, 0, 0)  -- Черный фон для текстового поля
+keyTextBox.BackgroundTransparency = 0  -- Оставляем непрозрачным
+keyTextBox.Parent = frame
+
+-- Создаем кнопку Sign Up (нижняя, слева)
+local signUpButton = Instance.new("TextButton")
+signUpButton.Size = UDim2.new(0, 180, 0, 50)
+signUpButton.Position = UDim2.new(0.5, -90, 0.6, 0) -- Позиция слева внизу с отступом
+signUpButton.Text = "Sign Up"
+signUpButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+signUpButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)  -- Черный фон для кнопки
+signUpButton.BackgroundTransparency = 0  -- Оставляем непрозрачным
+signUpButton.Parent = frame
+
+-- Создаем кнопку Get Key (нижняя, справа)
+local getKeyButton = Instance.new("TextButton")
+getKeyButton.Size = UDim2.new(0, 180, 0, 50)
+getKeyButton.Position = UDim2.new(0.5, -90, 0.75, 0) -- Позиция справа внизу с отступом
+getKeyButton.Text = "Get Key"
+getKeyButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+getKeyButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)  -- Черный фон для кнопки
+getKeyButton.BackgroundTransparency = 0  -- Оставляем непрозрачным
+getKeyButton.Parent = frame
+
+-- Создаем текст вверху "Key System Sprite"
+local titleLabel = Instance.new("TextLabel")
+titleLabel.Size = UDim2.new(0, 400, 0, 50)
+titleLabel.Position = UDim2.new(0.5, -200, 0.1, 0)  -- Позиция вверху
+titleLabel.Text = "Key System Sprite"
+titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)  -- Белый цвет текста
+titleLabel.TextSize = 24  -- Размер шрифта
+titleLabel.TextStrokeTransparency = 0.8  -- Строка текста для улучшения видимости
+titleLabel.BackgroundTransparency = 1  -- Без фона
+titleLabel.Parent = frame
+
+-- Функция для копирования ссылки в буфер обмена
+local function copyToClipboard(url)
+    setclipboard(url)
+    print("Copied to clipboard: " .. url)
+end
+
+-- Функция для создания уведомлений
+local function createNotification(message, isValid)
+    -- Создаем текстовое уведомление
+    local notification = Instance.new("TextLabel")
+    notification.Size = UDim2.new(0, 300, 0, 60)
+    notification.Position = UDim2.new(1, -310, 1, -100)  -- Позиция в правом нижнем углу
+    notification.Text = message
+    notification.TextColor3 = Color3.fromRGB(255, 255, 255)  -- Белый текст
+    notification.TextSize = 18
+    notification.TextStrokeTransparency = 0.7
+    notification.TextTransparency = 0  -- Сделаем текст полностью видимым
+    notification.BackgroundTransparency = 0.5
+
+    -- Оформление фона
+    notification.BackgroundColor3 = isValid and Color3.fromRGB(0, 255, 0) or Color3.fromRGB(255, 0, 0)  -- Зеленый для валидных, красный для невалидных
+    notification.BorderSizePixel = 2
+    notification.BorderColor3 = Color3.fromRGB(0, 0, 0)  -- Черная рамка
+
+    -- Закругленные углы
+    local corner = Instance.new("UICorner")
+    corner.CornerRadius = UDim.new(0, 12)
+    corner.Parent = notification
+
+    -- Тень для текста
+    local shadow = Instance.new("UIStroke")
+    shadow.Thickness = 2
+    shadow.Parent = notification
+
+    -- Анимация появления уведомления
+    notification.Parent = screenGui
+    notification:TweenPosition(UDim2.new(1, -310, 1, -150), "Out", "Quad", 0.5, true)
+
+    -- Плавное исчезновение уведомления через 3 секунды
+    wait(3)
+    notification:TweenPosition(UDim2.new(1, -310, 1, -100), "Out", "Quad", 0.5, true)
+    wait(0.5)
+    notification:Destroy()  -- Удаляем уведомление
+end
+
+-- Действие при нажатии на кнопку "Sign Up"
+-- Действие при нажатии на кнопку "Sign Up"
+-- Действие при нажатии на кнопку "Sign Up"
+signUpButton.MouseButton1Click:Connect(function()
+    local key = keyTextBox.Text:lower()  -- Приводим введенный ключ к нижнему регистру
+    local validKeys = { 
+        "XKTAR59AKALA", "AFTJEFH5ZGFNT", "heytest01", 
+        "LORYIVZKIYV813", "GRTKYPITMV5811", "ZXCFSDTRQ65254", 
+        "FZMYKGLFUIV4916", "GZJMVIRLYUQAX0791", "GMTYJEWMRYK3160", 
+        "XHKADYUIHJA1850", "SDLGTMUMKX5910"  
+    }  -- Список допустимых ключей
+
+    -- Приводим все ключи из validKeys к нижнему регистру
+    for i, validKey in ipairs(validKeys) do
+        validKeys[i] = validKey:lower()
+    end
+
+    -- Проверяем, совпадает ли введенный ключ с одним из допустимых
+    local keyValid = false
+    for _, validKey in pairs(validKeys) do
+        if key == validKey then
+            keyValid = true
+            break
+        end
+    end
+
+    if keyValid then
+        -- Если ключ правильный, закрываем окно и копируем ссылку
+        local discordLink = "https://discord.gg/xf8QaeNcdu"
+        copyToClipboard(discordLink)
+
+        -- Закрываем окно (удаляем фрейм)
+        frame:Destroy()
+        print("Window closed after successful key validation.")
+
+        -- Создаем уведомление
+        createNotification("You entered a valid key, starting the script", true)
+
+        -- Загружаем и выполняем скрипт, если ключ правильный
+        local scriptURL = "https://raw.githubusercontent.com/niteboiFZK3/sprite.cc/refs/heads/main/script"
+        local success, result = pcall(function()
+            loadstring(game:HttpGetAsync(scriptURL))()
+        end)
+
+        -- Обработка ошибок, если скрипт не загрузился или не выполнен
+        if not success then
+            print("Error executing script: " .. result)
+            createNotification("Failed to execute the script", false)
+        end
+
+    else
+        -- Если ключ неверный
+        print("Invalid key entered.")
+
+        -- Создаем уведомление
+        createNotification("Invalid key entered", false)
+    end
+end)
